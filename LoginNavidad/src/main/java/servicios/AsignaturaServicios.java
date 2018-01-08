@@ -9,6 +9,7 @@ import dao.AsignaturasDAO;
 import java.util.List;
 import modelos.Asignatura;
 import modelos.Curso;
+import modelos.Tarea;
 
 /**
  *
@@ -30,5 +31,10 @@ public class AsignaturaServicios {
         AsignaturasDAO dao = new AsignaturasDAO();
 
         return dao.addCurso(cursoNuevo);
+    }
+    public Tarea addTarea(Tarea tareaNuevo) {
+        AsignaturasDAO dao = new AsignaturasDAO();
+
+        return dao.addTarea(tareaNuevo);
     }
 }
