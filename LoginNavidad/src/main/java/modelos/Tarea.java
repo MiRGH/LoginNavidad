@@ -17,6 +17,7 @@ public class Tarea {
      private Long id_asignatura;
      private Long id_alumno;
      private LocalDateTime fecha;
+     private int completado;
 
     public String getNombre() {
         return nombre;
