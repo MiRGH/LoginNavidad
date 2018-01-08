@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Asignatura;
+import modelos.Asignatura;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -45,8 +45,8 @@ public class AsignaturasDAO {
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
             long id = qr.insert(con,
-                    "INSERT INTO ASIGNATURAS (NOMBRE,CICLO,CURSO) VALUES(?,?,?)",
-                    new ScalarHandler<Long>(), a.getNombre(), a.getCiclo(), a.getCurso());
+                    "INSERT INTO ASIGNATURAS (NOMBRE,ID_CURSO) VALUES(?,?,?)",
+                    new ScalarHandler<Long>(), a.getNombre(), a.getId_curso());
            
             a.setId(id);
             con.commit();
