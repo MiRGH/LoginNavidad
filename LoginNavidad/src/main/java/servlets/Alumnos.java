@@ -7,15 +7,19 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelos.Alumno;
+import servicios.AlumnosServicios;
 
 /**
  *
- * @author Dani
+ * @author Carlos
  */
 @WebServlet(name = "Alumnos", urlPatterns = {"/alumnos"})
 public class Alumnos extends HttpServlet {
@@ -31,19 +35,48 @@ public class Alumnos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Alumnos</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Alumnos at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        AlumnosServicios as = new AlumnosServicios();
+        String op = request.getParameter("op");
+        int dato = 0;
+        Alumno alu = null;
+        
+        if (op != null) {/*si op existe*/
+            String nombre = request.getParameter("nombre");
+            String fecha = request.getParameter("fecha");
+            int id_tarea = Integer.parseInt(request.getParameter("id_tarea"));
+            Date form_fecha = null;
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+            switch (op) {
+                case "INSERT":
+                    try {
+                        Alumno a = new Alumno();
+                        form_fecha = format.parse(fecha);
+                        a.setNombre(nombre);
+                        a.setFecha_nacimiento(form_fecha);
+                        a.setMayor(0);//falta hacer comparacion de fechas 
+                        a.setId_tarea(id_tarea);
+                        as.insertarAlumnos(a);
+
+                    } catch (Exception e) {
+                        System.out.println("Error en el formato de fecha");
+                    }
+                    break;
+                case "GET_ALUMNO_ID":
+                    int id_alumno = Integer.parseInt(request.getParameter("id_alumno"));
+                    alu = as.getAlumnoId(id_alumno);
+                    dato = 1;
+                    break;
+            }
         }
+        if (dato == 0) {
+            request.setAttribute("alumnos", as.getAllAlumnos());//para darme TODOS los alumnos
+        } else {
+            request.setAttribute("alu", alu);//parar darme un alumno concreto 
+        }
+
+        request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
