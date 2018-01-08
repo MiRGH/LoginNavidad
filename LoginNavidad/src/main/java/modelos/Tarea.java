@@ -34,6 +34,13 @@ public class Tarea {
     public void setId(Long id) {
         this.id = id;
     }
+    public int getCompletado() {
+        return completado;
+    }
+
+    public void setCompletado(int completado) {
+        this.completado = completado;
+    }
 
     public Long getId_asignatura() {
         return id_asignatura;
