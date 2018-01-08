@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelos.Asignatura;
 import modelos.Curso;
+import modelos.Tarea;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -70,6 +71,26 @@ public class AsignaturasDAO {
                     new ScalarHandler<Long>(), a.getNombre());
            
             a.setId_curso(id);
+            con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+            a = null;
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return a;
+    }
+     public Tarea addTarea(Tarea a) {
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            long id = qr.insert(con,
+                    "INSERT INTO TAREA (NOMBRE) VALUES(?)",
+                    new ScalarHandler<Long>(), a.getNombre());
+           
+            a.setId(id);
             con.commit();
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
