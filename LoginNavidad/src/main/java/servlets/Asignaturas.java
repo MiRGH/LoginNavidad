@@ -39,12 +39,11 @@ public class Asignaturas extends HttpServlet
     {
 
         Asignatura a = new Asignatura();
-        AsignaturasServicios as = new AsignaturasServicios();
+        AsignaturaServicios as = new AsignaturaServicios();
         String op = request.getParameter("op");
         String id = request.getParameter("id");
         String nombre = request.getParameter("nombre");
-        String curso = request.getParameter("curso");
-        String ciclo = request.getParameter("ciclo");
+        String curso = request.getParameter("id_curso");
         if(op==null){
             op="";
         }
@@ -52,21 +51,10 @@ public class Asignaturas extends HttpServlet
         {
             case "insert":
                 a.setNombre(nombre);
-                a.setCurso(curso);
-                a.setCiclo(ciclo);
+                a.setId_curso(Long.parseLong(curso));
                as.addAsig(a);
                 break;
-            case "delete":
-                a.setId(Long.parseLong(id));
-               as.delAsig(a);
-                break;
-            case "update":
-                a.setId(Long.parseLong(id));
-                a.setNombre(nombre);
-                a.setCurso(curso);
-                a.setCiclo(ciclo);
-                as.updateAsig(a);
-                break;
+           
             default:
               request.setAttribute("asignaturas", as.getAllAsignaturas());
                 request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
