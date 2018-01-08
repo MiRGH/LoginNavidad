@@ -87,8 +87,8 @@ public class AsignaturasDAO {
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
             long id = qr.insert(con,
-                    "INSERT INTO TAREA (NOMBRE) VALUES(?)",
-                    new ScalarHandler<Long>(), a.getNombre());
+                    "INSERT INTO TAREA (NOMBRE,ID_ASIGNATURA,ID_ALUMNO,FECHA,COMPLETADO) VALUES(?,?,?,?,?)",
+                    new ScalarHandler<Long>(), a.getNombre(),a.getId_asignatura(),a.getId_alumno(),a.getFecha(),a.getCompletado());
            
             a.setId(id);
             con.commit();
