@@ -11,8 +11,9 @@ package modelos;
  */
 public class Asignatura {
      private Long id;
-    private String nombre;
+     private String nombre;
      private Long id_curso;
+     private Long id_profesor;
     
     public Asignatura(){
     }
@@ -37,4 +38,13 @@ public class Asignatura {
     public String getNombre(){
         return nombre;
     }
+
+    public Long getId_profesor() {
+        return id_profesor;
+    }
+
+    public void setId_profesor(Long id_profesor) {
+        this.id_profesor = id_profesor;
+    }
+    
 }

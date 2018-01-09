@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
+import modelos.Asignatura;
 import modelos.Profesor;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -84,7 +85,26 @@ public class ProfesoresDAO {
 
         } catch (Exception e) {
             System.out.println("Error en la conexión con la base de datos");
-        }  finally {
+        } finally {
+            DBConnection db = DBConnection.getInstance();
+            db.cerrarConexion(con);
+        }
+
+        return result;
+    }
+
+    public Asignatura getAsigByProf(int id) {
+        Asignatura result = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            BeanHandler<Asignatura> h = new BeanHandler<>(Asignatura.class);
+            result = qr.query(
+                    "SELECT a.nombre, a.id, p.id_profesor FROM asignatura a JOIN profesor p ON a.id_profesor = p.id_profesor ;", h, id);
+
+        } catch (Exception e) {
+            System.out.println("Error en la conexión con la base de datos");
+        } finally {
             DBConnection db = DBConnection.getInstance();
             db.cerrarConexion(con);
         }
