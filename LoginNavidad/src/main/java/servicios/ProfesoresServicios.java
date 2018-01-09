@@ -8,6 +8,7 @@ package servicios;
 import dao.ProfesoresDAO;
 import java.util.ArrayList;
 import java.util.List;
+import modelos.AsigProf;
 import modelos.Profesor;
 
 /**
@@ -30,5 +31,9 @@ public class ProfesoresServicios {
         ProfesoresDAO profesores = new ProfesoresDAO();
         return profesores.insertarProfesores(p);
     }
+public AsigProf getAllAsigbyProf(int id) {
+        ProfesoresDAO dao = new ProfesoresDAO();
 
+        return dao.getAsigByProf(id);
+    }
 }
