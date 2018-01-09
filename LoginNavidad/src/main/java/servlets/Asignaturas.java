@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 import modelos.Asignatura;
+import modelos.User;
 import servicios.AsignaturaServicios;
+import servicios.ProfesoresServicios;
 
 /**
  *
@@ -37,13 +39,17 @@ public class Asignaturas extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException
     {
-
+        User u = request.getSession().getAttribute("ususario");
         Asignatura a = new Asignatura();
         AsignaturaServicios as = new AsignaturaServicios();
+        ProfesoresServicios ps = new ProfesoresServicios();
         String op = request.getParameter("op");
         String id = request.getParameter("id");
         String nombre = request.getParameter("nombre");
         String curso = request.getParameter("id_curso");
+        if(u.getPermiso()==3){
+            ps.getAllAsigbyProf(u.getId());
+        }
         if(op==null){
             op="";
         }
