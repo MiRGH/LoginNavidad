@@ -27,14 +27,25 @@ public class AsignaturaServicios {
 
         return dao.addAsignatura(asignaturaNuevo);
     }
+     public List<Curso> getAllCursos() {
+        AsignaturasDAO dao = new AsignaturasDAO();
+
+        return dao.getAllCursos();
+    }
     public Curso addCurso(Curso cursoNuevo) {
         AsignaturasDAO dao = new AsignaturasDAO();
 
         return dao.addCurso(cursoNuevo);
+    }
+     public List<Tarea> getAllTareas() {
+        AsignaturasDAO dao = new AsignaturasDAO();
+
+        return dao.getAllTareas();
     }
     public Tarea addTarea(Tarea tareaNuevo) {
         AsignaturasDAO dao = new AsignaturasDAO();
 
         return dao.addTarea(tareaNuevo);
     }
+     
 }
