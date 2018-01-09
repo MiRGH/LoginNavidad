@@ -9,14 +9,15 @@ import java.util.Date;
 
 /**
  *
- * @author Dani
+ * @author Carlos
  */
 public class Alumno {
     private int id;
     private String nombre;
     private int mayor;
     private Date fecha_nacimiento;
-    private int id_tarea;
+    private int id_tarea;//fk
+    
 
     public Alumno() {
     }
