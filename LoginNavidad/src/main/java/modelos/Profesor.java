@@ -10,19 +10,10 @@ package modelos;
  * @author Carlos
  */
 public class Profesor {
-    private int id_profesor;
     private String nombre;
     private int id_usuario;
 
     public Profesor() {
-    }
-
-    public int getId_profesor() {
-        return id_profesor;
-    }
-
-    public void setId_profesor(int id_profesor) {
-        this.id_profesor = id_profesor;
     }
 
     public String getNombre() {
