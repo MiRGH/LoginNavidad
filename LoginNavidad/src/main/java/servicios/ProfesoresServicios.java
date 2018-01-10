@@ -31,7 +31,8 @@ public class ProfesoresServicios {
         ProfesoresDAO profesores = new ProfesoresDAO();
         return profesores.insertarProfesores(p);
     }
-public AsigProf getAllAsigbyProf(int id) {
+
+    public AsigProf getAllAsigbyProf(int id) {
         ProfesoresDAO dao = new ProfesoresDAO();
 
         return dao.getAsigByProf(id);

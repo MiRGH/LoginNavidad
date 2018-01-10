@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelos.Alumno;
+import modelos.User;
 import servicios.AlumnosServicios;
 
 /**
@@ -35,10 +36,20 @@ public class Alumnos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        User u = request.getSession().getAttribute("usuario");
         AlumnosServicios as = new AlumnosServicios();
+        ProfesoresServicios ps = new ProfesoresServicios();
         String op = request.getParameter("op");
         int dato = 0;
         Alumno alu = null;
+        
+        if(u.getPermiso()== 2){//si tienes el permiso 2
+            ps.getAllNotas(u.getId_nota());
+        }
+        if(op == null){
+            op="";
+        }
         
         if (op != null) {/*si op existe*/
             String nombre = request.getParameter("nombre");
@@ -62,6 +73,7 @@ public class Alumnos extends HttpServlet {
                         System.out.println("Error en el formato de fecha");
                     }
                     break;
+                    
                 case "GET_ALUMNO_ID":
                     int id_alumno = Integer.parseInt(request.getParameter("id_alumno"));
                     alu = as.getAlumnoId(id_alumno);

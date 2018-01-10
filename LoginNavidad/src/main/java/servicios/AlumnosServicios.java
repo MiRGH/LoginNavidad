@@ -6,9 +6,11 @@
 package servicios;
 
 import dao.AlumnosDAO;
+import dao.AsignaturasDAO;
 import java.util.ArrayList;
 import java.util.List;
 import modelos.Alumno;
+import modelos.Tarea;
 
 /**
  *
@@ -29,6 +31,16 @@ public class AlumnosServicios {
     public int insertarAlumnos(Alumno a) {
         AlumnosDAO alumnos = new AlumnosDAO();
         return alumnos.insertarAlumnos(a);
+    }
+    public List<Tarea> getAllTareas() {
+        AlumnosDAO dao = new AlumnosDAO();
+
+        //return dao.();
+    }
+    public Tarea añadirTarea(Tarea nuevaTarea) {
+        AlumnosDAO dao = new AlumnosDAO();
+
+        //return dao.addTarea(nuevaTarea);
     }
 
 }
