@@ -7,7 +7,7 @@ package modelos;
 
 /**
  *
- * @author daw
+ * @author Carlos
  */
 public class AsigProf {
     private Long id_profesor;
