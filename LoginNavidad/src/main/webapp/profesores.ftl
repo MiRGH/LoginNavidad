@@ -15,13 +15,26 @@ This is content
         <meta charset="${charset}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-    <body><#if content??>
-        <div>${content}</div>
-		<#else>
-        <div>No content</div>
-		</#if>
-		<@my.function>parameter</@my.function>
-
+    <body> <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+            <#if content??>
+            <#list profesores as profesor>
+            <tr>
+                <td>
+                    <input type="button" value="ver">
+                </td>
+                <td>${profesor.id}</td>
+                <td>${profesor.nombre}</td>
+                </tr>
+            </#list>
+           <#else>
+            <div> No hay profesores</div>
+            </#if>
+            </table>
+            
 
         </body>
     </html>
