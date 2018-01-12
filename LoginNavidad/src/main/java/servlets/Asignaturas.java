@@ -39,7 +39,7 @@ public class Asignaturas extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException
     {
-        User u = request.getSession().getAttribute("ususario");
+        User u = (User) request.getSession().getAttribute("usuario");
         Asignatura a = new Asignatura();
         AsignaturaServicios as = new AsignaturaServicios();
         ProfesoresServicios ps = new ProfesoresServicios();
@@ -47,9 +47,7 @@ public class Asignaturas extends HttpServlet
         String id = request.getParameter("id");
         String nombre = request.getParameter("nombre");
         String curso = request.getParameter("id_curso");
-        if(u.getPermiso()==3){
-            ps.getAllAsigbyProf(u.getId());
-        }
+       
         if(op==null){
             op="";
         }

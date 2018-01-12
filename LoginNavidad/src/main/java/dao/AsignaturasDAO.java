@@ -60,6 +60,22 @@ public class AsignaturasDAO {
         }
         return a;
     }
+    public List<Curso> getAllCursos() {
+        List<Curso> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Curso>> h = new BeanListHandler<Curso>(Curso.class);
+            lista = qr.query(con, "select * FROM CURSOS", h);
+
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
      public Curso addCurso(Curso a) {
         Connection con = null;
         try {
@@ -80,24 +96,5 @@ public class AsignaturasDAO {
         }
         return a;
     }
-     public Tarea addTarea(Tarea a) {
-        Connection con = null;
-        try {
-            con = DBConnection.getInstance().getConnection();
-            con.setAutoCommit(false);
-            QueryRunner qr = new QueryRunner();
-            long id = qr.insert(con,
-                    "INSERT INTO TAREA (NOMBRE,ID_ASIGNATURA,ID_ALUMNO,FECHA,COMPLETADO) VALUES(?,?,?,?,?)",
-                    new ScalarHandler<Long>(), a.getNombre(),a.getId_asignatura(),a.getId_alumno(),a.getFecha(),a.getCompletado());
-           
-            a.setId(id);
-            con.commit();
-        } catch (Exception ex) {
-            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
-            a = null;
-        } finally {
-            DBConnection.getInstance().cerrarConexion(con);
-        }
-        return a;
-    }
+     
 }

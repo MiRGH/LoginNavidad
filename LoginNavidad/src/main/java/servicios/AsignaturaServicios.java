@@ -37,15 +37,6 @@ public class AsignaturaServicios {
 
         return dao.addCurso(cursoNuevo);
     }
-     public List<Tarea> getAllTareas() {
-        AsignaturasDAO dao = new AsignaturasDAO();
-
-        return dao.getAllTareas();
-    }
-    public Tarea addTarea(Tarea tareaNuevo) {
-        AsignaturasDAO dao = new AsignaturasDAO();
-
-        return dao.addTarea(tareaNuevo);
-    }
+     
      
 }

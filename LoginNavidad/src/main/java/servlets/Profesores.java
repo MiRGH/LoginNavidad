@@ -5,9 +5,14 @@
  */
 package servlets;
 
+/**
+ *
+ * @author Rafa
+ */
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelos.Alumno;
 import modelos.User;
+import modelos.Profesor;
+import modelos.Tarea;
+import modelos.Nota;
 import servicios.AlumnosServicios;
 import servicios.ProfesoresServicios;
 
@@ -23,8 +31,8 @@ import servicios.ProfesoresServicios;
  *
  * @author Carlos
  */
-@WebServlet(name = "Alumnos", urlPatterns = {"/alumnos"})
-public class Alumnos extends HttpServlet {
+@WebServlet(name = "Profesores", urlPatterns = {"/profesores"})
+public class Profesores extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,48 +45,50 @@ public class Alumnos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         User u = (User) request.getSession().getAttribute("usuario");
+
         AlumnosServicios as = new AlumnosServicios();
         ProfesoresServicios ps = new ProfesoresServicios();
         String op = request.getParameter("op");
+        String addTarea = request.getParameter("addTarea");
+        String addNota = request.getParameter("addNota");
+        String nombreTarea = request.getParameter("nombreTarea");
+        String id_asig = request.getParameter("id_asignatura");
+        String id_alumno = request.getParameter("id_alumno");
+        String nota = request.getParameter("nota");
         int dato = 0;
         Alumno alu = null;
-        
-        if(u.getPermiso()== 2){//si tienes el permiso 2
-            as.getAllNotas(u.getId());
+
+        if (op == null) {
+            op = "";
         }
-        if(op == null){
-            op="";
-        }
-        
+
         if (op != null) {/*si op existe*/
-            String nombre = request.getParameter("nombre");
-            String fecha = request.getParameter("fecha");
-            int id_tarea = Integer.parseInt(request.getParameter("id_tarea"));
-            Date form_fecha = null;
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-
+            if (u.getPermiso() == 3)/*permiso profe */ {
+                ps.getAllAsigbyProf(u.getId());
+            }
             switch (op) {
-                case "INSERT":
+                case "VER_ASIG":
                     try {
-                        Alumno a = new Alumno();
-                        form_fecha = format.parse(fecha);
-                        a.setNombre(nombre);
-                        a.setFecha_nacimiento(form_fecha);
-                        a.setMayor(0);//falta hacer comparacion de fechas 
-                        a.setId_tarea(id_tarea);
-                        as.insertarAlumnos(a);
-
+                        ps.getAllAsigbyProf(Long.parseLong(id_asig));
+                        if (addTarea.equals("si")) {
+                            Tarea t = new Tarea();
+                            t.setNombre(nombreTarea);
+                            t.setId_asignatura(Long.parseLong(id_asig));
+                            t.setFecha(LocalDateTime.MIN);
+                            ps.addTarea(t);
+                        }
+                        if (addNota.equals("si")) {
+                            Nota n = new Nota();
+                            n.setIdAsignatura(Long.parseLong(id_asig));
+                            n.setIdAlumno(Long.parseLong(id_alumno));     
+                            n.setNota(Integer.parseInt(nota));
+                            ps.addNota(n);
+                        }
                     } catch (Exception e) {
                         System.out.println("Error en el formato de fecha");
                     }
-                    break;
-                    
-                case "GET_ALUMNO_ID":
-                    int id_alumno = Integer.parseInt(request.getParameter("id_alumno"));
-                    alu = as.getAlumnoId(id_alumno);
-                    dato = 1;
                     break;
             }
         }

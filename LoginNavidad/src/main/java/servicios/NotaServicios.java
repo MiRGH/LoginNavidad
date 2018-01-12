@@ -11,15 +11,15 @@ import modelos.Nota;
  * @author Dani
  */
 public class NotaServicios {
-     public Nota getNotas(Nota notas) {
+    /* public Nota getNotas(Nota notas) {
         NotasDAO dao = new NotasDAO();
 
-        return dao.selectNota(notas);
+        //return dao.selectNota(notas);
     }
 
     public Nota addNotas(Nota notas) {
         NotasDAO dao = new NotasDAO();
 
         return dao.insertNota(notas);
-    }
+    }*/
 }

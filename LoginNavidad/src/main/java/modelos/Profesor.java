@@ -11,7 +11,7 @@ package modelos;
  */
 public class Profesor {
     private String nombre;
-    private int id_usuario;
+    private long id_usuario;
 
     public Profesor() {
     }
@@ -24,11 +24,11 @@ public class Profesor {
         this.nombre = nombre;
     }
 
-    public int getId_usuario() {
+    public long getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(int id_usuario) {
+    public void setId_usuario(long id_usuario) {
         this.id_usuario = id_usuario;
     }
     

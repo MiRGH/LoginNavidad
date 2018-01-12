@@ -12,12 +12,20 @@ import java.time.LocalDateTime;
  * @author Rafa
  */
 public class Tarea {
+
     private String nombre;
-     private Long id;
-     private Long id_asignatura;
-     private Long id_alumno;
-     private LocalDateTime fecha;
-     private int completado;
+    private long id;
+    private LocalDateTime fecha;
+    private long id_asignatura;
+
+    public long getId_asignatura() {
+        return id_asignatura;
+    }
+
+    public void setId_asignatura(long id_asignatura) {
+        this.id_asignatura = id_asignatura;
+    }
+    
 
     public String getNombre() {
         return nombre;
@@ -27,31 +35,15 @@ public class Tarea {
         this.nombre = nombre;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
+
     
-
-    public Long getId_asignatura() {
-        return id_asignatura;
-    }
-
-    public void setId_asignatura(Long id_asignatura) {
-        this.id_asignatura = id_asignatura;
-    }
-
-    public Long getId_alumno() {
-        return id_alumno;
-    }
-
-    public void setId_alumno(Long id_alumno) {
-        this.id_alumno = id_alumno;
-    }
-
     public LocalDateTime getFecha() {
         return fecha;
     }
@@ -60,12 +52,5 @@ public class Tarea {
         this.fecha = fecha;
     }
 
-    public int getCompletado() {
-        return completado;
-    }
-
-    public void setCompletado(int completado) {
-        this.completado = completado;
-    }
-     
+  
 }

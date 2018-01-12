@@ -14,28 +14,28 @@ public class Nota {
     public Nota() {
 
     }
-    private Long idAlumno;
-    private Long idAsignatura;
+    private long id_alumno;
+    private long id_asignatura;
     private int nota;
 
-    public Long getIdAlumno() {
-        return idAlumno;
+    public long getIdAlumno() {
+        return id_alumno;
     }
 
-    public Long getIdAsignatura() {
-        return idAsignatura;
+    public long getIdAsignatura() {
+        return id_asignatura;
     }
 
     public int getNota() {
         return nota;
     }
 
-    public void setIdAlumno(Long idAlumno) {
-        this.idAlumno = idAlumno;
+    public void setIdAlumno(long idAlumno) {
+        this.id_alumno = id_alumno;
     }
 
-    public void setIdAsignatura(Long idAsignatura) {
-        this.idAsignatura = idAsignatura;
+    public void setIdAsignatura(long idAsignatura) {
+        this.id_asignatura = id_asignatura;
     }
 
     public void setNota(int nota) {

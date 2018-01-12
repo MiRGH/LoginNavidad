@@ -20,10 +20,13 @@ import javax.sql.DataSource;
 import modelos.AsigProf;
 import modelos.Asignatura;
 import modelos.Profesor;
+import modelos.Tarea;
+import modelos.Nota;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -94,14 +97,15 @@ public class ProfesoresDAO {
         return result;
     }
 
-    public AsigProf getAsigByProf(int id) {
+    public AsigProf getAsigByProf(long id) {
         AsigProf result = null;
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
             BeanHandler<AsigProf> h = new BeanHandler<>(AsigProf.class);
             result = qr.query(
-                    "SELECT a.nombre, a.id_curso, p.nombre FROM asignatura a JOIN asigprof ap ON a.id = ap.id_asig JOIN profesor p ON p.id_profesor = ap.id_profesor ;", h, id);
+                    "SELECT a.nombre, a.id_curso, p.nombre FROM asignatura a JOIN asigprof ap ON a.id = ap.id_asig JOIN profesor p "
+                    + "ON p.id_profesor = ap.id_profesor where ap.id_profesor=? ;", h, id);
 
         } catch (Exception e) {
             System.out.println("Error en la conexión con la base de datos");
@@ -111,25 +115,47 @@ public class ProfesoresDAO {
         }
 
         return result;
+
     }
-    /*
-    public Asignatura getAsigByProf(int id) {
-        Asignatura result = null;
+
+    public Tarea addTarea(Tarea a) {
+        Connection con = null;
         try {
             con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
-            BeanHandler<Asignatura> h = new BeanHandler<>(Asignatura.class);
-            result = qr.query(
-                    "SELECT a.nombre, a.id, p.id_profesor FROM asignatura a JOIN profesor p ON a.id_profesor = p.id_profesor ;", h, id);
+            long id = qr.insert(con,
+                    "INSERT INTO TAREA (NOMBRE,FECHA,ID_ASIGNATURA) VALUES(?,?,?,?,?)",
+                    new ScalarHandler<Long>(), a.getNombre(), a.getFecha(), a.getId_asignatura());
 
-        } catch (Exception e) {
-            System.out.println("Error en la conexión con la base de datos");
+            a.setId(id);
+            con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(ProfesoresDAO.class.getName()).log(Level.SEVERE, null, ex);
+            a = null;
         } finally {
-            DBConnection db = DBConnection.getInstance();
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
-
-        return result;
+        return a;
     }
-     */
+
+    public Nota addNota(Nota a) {
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            long id = qr.insert(con,
+                    "INSERT INTO NOTAS (ID_ALUMNO,ID_ASIGNATURA,NOTA) VALUES(?,?,?)",
+                    new ScalarHandler<Long>(), a.getIdAlumno(), a.getIdAsignatura(), a.getNota());
+            con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(ProfesoresDAO.class.getName()).log(Level.SEVERE, null, ex);
+            a = null;
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return a;
+    }
+
 }

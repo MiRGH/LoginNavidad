@@ -18,6 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
 import modelos.Alumno;
+import modelos.AluTarea;
+import modelos.Nota;
+import modelos.Tarea;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -90,6 +93,41 @@ public class AlumnosDAO {
         }
 
         return result;
+    }
+    public AluTarea getTareaByAlu(long id) {
+        AluTarea result = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            BeanHandler<AluTarea> h = new BeanHandler<>(AluTarea.class);
+            result = qr.query(
+                    "SELECT a.nombre, t.nombre, at.completado FROM alumnos a JOIN AluTarea at ON a.id = at.id_alumno JOIN Tarea t "
+                            + "ON at.id_tarea = t.id where at.id_alumno=?;", h, id);
+
+        } catch (Exception e) {
+            System.out.println("Error en la conexión con la base de datos");
+        } finally {
+            DBConnection db = DBConnection.getInstance();
+            db.cerrarConexion(con);
+        }
+
+        return result;
+    }
+    public Nota getAllNotaByAlu(Nota notas) {
+        DBConnection db = null;
+        Connection con = null;
+        try {
+            con = db.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<Nota> handler = new BeanHandler<Nota>(Nota.class);
+            notas = qr.query(con, "select * from NOTAS where ID_ALUMNO=?;", handler, notas.getIdAlumno());
+
+        } catch (Exception ex) {
+            Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.getInstance().cerrarConexion(con);
+        }
+        return notas;
     }
 
 }

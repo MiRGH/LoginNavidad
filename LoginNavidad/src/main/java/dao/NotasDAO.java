@@ -21,22 +21,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
  * @author Dani
  */
 public class NotasDAO {
-     public Nota selectNota(Nota notas) {
-        DBConnection db = null;
-        Connection con = null;
-        try {
-            con = db.getInstance().getConnection();
-            QueryRunner qr = new QueryRunner();
-            ResultSetHandler<Nota> handler = new BeanHandler<Nota>(Nota.class);
-            notas = qr.query(con, "select * from NOTAS where ID_ALUMNO=? AND ID_ASIGNATURA=?", handler, notas.getIdAlumno(), notas.getIdAsignatura());
-
-        } catch (Exception ex) {
-            Logger.getLogger(NotasDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            db.getInstance().cerrarConexion(con);
-        }
-        return notas;
-    }
+     
 
     public Nota insertNota(Nota notas) {
         DBConnection db = null;

@@ -5,11 +5,14 @@
  */
 package servicios;
 
+import dao.AlumnosDAO;
 import dao.ProfesoresDAO;
 import java.util.ArrayList;
 import java.util.List;
 import modelos.AsigProf;
+import modelos.Nota;
 import modelos.Profesor;
+import modelos.Tarea;
 
 /**
  *
@@ -32,9 +35,19 @@ public class ProfesoresServicios {
         return profesores.insertarProfesores(p);
     }
 
-    public AsigProf getAllAsigbyProf(int id) {
+    public AsigProf getAllAsigbyProf(long id) {
         ProfesoresDAO dao = new ProfesoresDAO();
 
         return dao.getAsigByProf(id);
+    }
+     public Tarea addTarea(Tarea nuevaTarea) {
+        ProfesoresDAO dao = new ProfesoresDAO();
+
+        return dao.addTarea(nuevaTarea);
+    }
+     public Nota addNota(Nota nuevaNota) {
+        ProfesoresDAO dao = new ProfesoresDAO();
+
+        return dao.addNota(nuevaNota);
     }
 }

@@ -7,9 +7,12 @@ package servicios;
 
 import dao.AlumnosDAO;
 import dao.AsignaturasDAO;
+import dao.NotasDAO;
 import java.util.ArrayList;
 import java.util.List;
+import modelos.AluTarea;
 import modelos.Alumno;
+import modelos.Nota;
 import modelos.Tarea;
 
 /**
@@ -32,15 +35,15 @@ public class AlumnosServicios {
         AlumnosDAO alumnos = new AlumnosDAO();
         return alumnos.insertarAlumnos(a);
     }
-    public List<Tarea> getAllTareas() {
+    public AluTarea getTareaByAlu(long id) {
         AlumnosDAO dao = new AlumnosDAO();
 
-        //return dao.();
+        return dao.getTareaByAlu(id);
     }
-    public Tarea añadirTarea(Tarea nuevaTarea) {
-        AlumnosDAO dao = new AlumnosDAO();
-
-        //return dao.addTarea(nuevaTarea);
+    public List<Nota> getAllNotaByAlu(long id) {
+        NotasDAO notas = new NotasDAO();
+        return notas.getAllNotaByAlu(id);
     }
+   
 
 }
