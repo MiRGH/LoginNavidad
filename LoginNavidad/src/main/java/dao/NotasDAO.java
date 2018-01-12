@@ -8,6 +8,7 @@ package dao;
 import modelos.Nota;
 
 import java.sql.Connection;
+import java.util.List;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,6 +72,10 @@ public class NotasDAO {
             DBConnection.getInstance().cerrarConexion(con);
         }
         return filas;
+    }
+
+    public List<Nota> getAllNotaByAlu(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

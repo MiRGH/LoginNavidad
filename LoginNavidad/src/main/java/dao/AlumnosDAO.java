@@ -64,8 +64,8 @@ public class AlumnosDAO {
             QueryRunner qr = new QueryRunner();
 
             filas = qr.update(con,
-                    "INSERT INTO ALUMNOS (NOMBRE, MAYOR, FECHA_NACIMIENTO, ID_TAREA) VALUES(?, ?, ?, ?) ",
-                    a.getNombre(), a.getMayor(), a.getFecha_nacimiento(), a.getId_tarea());
+                    "INSERT INTO ALUMNOS (NOMBRE, ID_TAREA) VALUES(?, ?) ",
+                    a.getNombre(), a.getId_tarea());
 
         } catch (Exception ex) {
             Logger.getLogger(Alumno.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,6 +74,23 @@ public class AlumnosDAO {
             db.cerrarConexion(con);
         }
         return filas;
+    }
+
+    public List<Alumno> buscarAlumnos(String nombre) {
+        List<Alumno> lista = null;
+
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Alumno>> h = new BeanListHandler<>(Alumno.class);
+            lista = qr.query(con, 
+                    "SELECT * FROM ALUMNOS WHERE NOMBRE = ?", h, nombre);
+        } catch (Exception e) {
+            Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
     }
 
     public Alumno getAlumnoId(int id) {
@@ -87,13 +104,14 @@ public class AlumnosDAO {
 
         } catch (Exception e) {
             System.out.println("Error en la conexión con la base de datos");
-        }  finally {
+        } finally {
             DBConnection db = DBConnection.getInstance();
             db.cerrarConexion(con);
         }
 
         return result;
     }
+
     public AluTarea getTareaByAlu(long id) {
         AluTarea result = null;
         try {
@@ -102,7 +120,7 @@ public class AlumnosDAO {
             BeanHandler<AluTarea> h = new BeanHandler<>(AluTarea.class);
             result = qr.query(
                     "SELECT a.nombre, t.nombre, at.completado FROM alumnos a JOIN AluTarea at ON a.id = at.id_alumno JOIN Tarea t "
-                            + "ON at.id_tarea = t.id where at.id_alumno=?;", h, id);
+                    + "ON at.id_tarea = t.id where at.id_alumno=?;", h, id);
 
         } catch (Exception e) {
             System.out.println("Error en la conexión con la base de datos");
@@ -113,6 +131,7 @@ public class AlumnosDAO {
 
         return result;
     }
+
     public Nota getAllNotaByAlu(Nota notas) {
         DBConnection db = null;
         Connection con = null;

@@ -14,8 +14,6 @@ import java.util.Date;
 public class Alumno {
     private long id;
     private String nombre;
-    private int mayor;
-    private Date fecha_nacimiento;
     private int id_tarea;//fk
     
 
@@ -36,22 +34,6 @@ public class Alumno {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public int getMayor() {
-        return mayor;
-    }
-
-    public void setMayor(int mayor) {
-        this.mayor = mayor;
-    }
-
-    public Date getFecha_nacimiento() {
-        return fecha_nacimiento;
-    }
-
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public int getId_tarea() {

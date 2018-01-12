@@ -35,15 +35,21 @@ public class AlumnosServicios {
         AlumnosDAO alumnos = new AlumnosDAO();
         return alumnos.insertarAlumnos(a);
     }
+
+    public List<Alumno> buscarAlumnos(String nombre) {
+        AlumnosDAO alumnos = new AlumnosDAO();
+        return alumnos.buscarAlumnos(nombre);
+    }
+
     public AluTarea getTareaByAlu(long id) {
         AlumnosDAO dao = new AlumnosDAO();
 
         return dao.getTareaByAlu(id);
     }
+
     public List<Nota> getAllNotaByAlu(long id) {
         NotasDAO notas = new NotasDAO();
         return notas.getAllNotaByAlu(id);
     }
-   
 
 }
