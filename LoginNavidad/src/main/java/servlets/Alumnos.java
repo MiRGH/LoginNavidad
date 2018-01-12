@@ -7,8 +7,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,22 +47,17 @@ public class Alumnos extends HttpServlet {
             String nombre = request.getParameter("nombre");
             String fecha = request.getParameter("fecha");
             int id_tarea = Integer.parseInt(request.getParameter("id_tarea"));
-            Date form_fecha = null;
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
             switch (op) {
                 case "INSERT":
                     try {
                         Alumno a = new Alumno();
-                        form_fecha = format.parse(fecha);
                         a.setNombre(nombre);
-                        a.setFecha_nacimiento(form_fecha);//falta hacer comparacion de fechas
-                        a.setMayor(0); 
                         a.setId_tarea(id_tarea);
                         as.insertarAlumnos(a);
 
                     } catch (Exception e) {
-                        System.out.println("Error en el formato de fecha");
+                        System.out.println("Error");
                     }
                     break;
                     
