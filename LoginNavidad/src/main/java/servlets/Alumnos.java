@@ -45,13 +45,6 @@ public class Alumnos extends HttpServlet {
         int dato = 0;
         Alumno alu = null;
         
-        if(u.getPermiso()== 2){//si tienes el permiso 2
-            as.getAllNotas(u.getId());
-        }
-        if(op == null){
-            op="";
-        }
-        
         if (op != null) {/*si op existe*/
             String nombre = request.getParameter("nombre");
             String fecha = request.getParameter("fecha");
@@ -65,8 +58,8 @@ public class Alumnos extends HttpServlet {
                         Alumno a = new Alumno();
                         form_fecha = format.parse(fecha);
                         a.setNombre(nombre);
-                        a.setFecha_nacimiento(form_fecha);
-                        a.setMayor(0);//falta hacer comparacion de fechas 
+                        a.setFecha_nacimiento(form_fecha);//falta hacer comparacion de fechas
+                        a.setMayor(0); 
                         a.setId_tarea(id_tarea);
                         as.insertarAlumnos(a);
 
