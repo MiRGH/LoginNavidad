@@ -62,7 +62,7 @@ public class Configuration {
     private String smtpPort;
     private String mailPass;
     private int minutosParaValidar;
-    
+    private int longitudCodigo;
     
 
     private freemarker.template.Configuration freeMarker;
@@ -147,6 +147,14 @@ public class Configuration {
     
     public void setMinutosParaValidar(int minutosParaValidar){
         this.minutosParaValidar = minutosParaValidar;
+    }
+    
+     public int getLongitudCodigo(){
+        return longitudCodigo;
+    }
+    
+    public void setLongitudCodigo(int longitudCodigo){
+        this.longitudCodigo = longitudCodigo;
     }
     
 

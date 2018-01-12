@@ -11,17 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelos.Nota;
-import servicios.AlumnosServicios;
-import servicios.AsignaturaServicios;
-import servicios.NotaServicios;
+import modelos.User;
+import servicios.UserServicios;
 
 /**
  *
  * @author Dani
  */
-@WebServlet(name = "Notas", urlPatterns = {"/notas"})
-public class Notas extends HttpServlet {
+@WebServlet(name = "AdministracionUsuarios", urlPatterns = {"/AdministracionUsuarios"})
+public class AdministracionUsuarios extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,40 +32,41 @@ public class Notas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        NotaServicios ns = new NotaServicios();
-        AlumnosServicios als = new AlumnosServicios();
-        AsignaturaServicios ass = new AsignaturaServicios();
-        Nota n = new Nota();
-        String nombreAlumno = request.getParameter("nombreAlumno");
-        String idAlumno = request.getParameter("idAlumno");
-        String nombreAsignatura = request.getParameter("nombreAsignatura");
-        String idAsignatura = request.getParameter("idAsignatura");
-        String nota = request.getParameter("nota");
+
+        UserServicios us = new UserServicios();
+        User user = new User();
+        String paginaSalida = "///////////";
+        String usuarioNombre;
+        int permisoAdmin = Integer.parseInt(request.getParameter("permisoAdmin"));
+        int permisoNuevo;
+
         if (request.getParameter("opcion") != null) {
             String opcion = request.getParameter("opcion");
 
             switch (opcion) {
-                case "select":
-                    n.setIdAlumno(Long.parseLong(idAlumno));
-                    n.setIdAsignatura(Long.parseLong(idAsignatura));
-                    n = ns.getNotas(n);
-                    request.setAttribute("nota", n);
+                case "cambiarPermiso":
+                    usuarioNombre = request.getParameter("nombre");
+                    permisoNuevo = Integer.parseInt(request.getParameter("permisoNuevo"));
+                    if (permisoAdmin < permisoNuevo) {
+                        user.setNombre(usuarioNombre);
+                        user.setPermiso(permisoNuevo);
+                        us.setPermiso(user);
+                    }else{
+                        request.setAttribute("mensaje", "Solo el super administrador puede otorgar permisos de administracion");
+                    }
+                    
                     break;
-                case "insert":
-                    n.setIdAlumno(Long.parseLong(idAlumno));
-                    n.setIdAsignatura(Long.parseLong(idAsignatura));
-                    n.setNota(Integer.parseInt(nota));
-                    ns.addNotas(n);
+
+                case "atras":
+                    paginaSalida = "///////////";
+
                     break;
             }
+
         }
-        request.setAttribute("nombreAlumno", nombreAlumno);
-        request.setAttribute("idAlumno", idAlumno);
-        request.setAttribute("nombreAsignatura", nombreAsignatura);
-        request.setAttribute("idAsignatura", idAsignatura);
-        request.setAttribute("alumnos", als.getAllAlumnos());
-        request.setAttribute("asignaturas", ass.getAllAsignaturas());
-        request.getRequestDispatcher("/////////////////").forward(request, response);
+        request.setAttribute("usuarios", us.getAllUsers());
+        request.getRequestDispatcher(paginaSalida).forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
