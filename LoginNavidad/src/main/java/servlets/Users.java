@@ -36,7 +36,7 @@ public class Users extends HttpServlet {
 
         UserServicios us = new UserServicios();
         User user = new User();
-        String paginaSalida="///////////";//logear o registrar por defecto
+        String paginaSalida="login.ftl";
         String usuarioNombre;
         String usuarioPass;
 
@@ -95,7 +95,7 @@ public class Users extends HttpServlet {
                             int permiso= us.getPermiso(user);
                             request.getSession().setAttribute("usuarioNombre", usuarioNombre);
                             request.getSession().setAttribute("permiso", permiso);
-                            paginaSalida="///////////";//opciones de seleccion o administracion
+                            paginaSalida="navegacion.ftl";
                             break;
                         case 1:
                             request.setAttribute("mensaje", "Nombre o contraseña incorrectos, intentelo de nuevo");

@@ -18,7 +18,7 @@ import servicios.UserServicios;
  *
  * @author Dani
  */
-@WebServlet(name = "AdministracionUsuarios", urlPatterns = {"/AdministracionUsuarios"})
+@WebServlet(name = "AdministracionUsuarios", urlPatterns = {"/permiso/administracionUsuarios"})
 public class AdministracionUsuarios extends HttpServlet {
 
     /**
@@ -35,30 +35,39 @@ public class AdministracionUsuarios extends HttpServlet {
 
         UserServicios us = new UserServicios();
         User user = new User();
-        String paginaSalida = "///////////";
-        String usuarioNombre;
-        int permisoAdmin = Integer.parseInt(request.getParameter("permisoAdmin"));
+        String paginaSalida = "administracion.ftl";
+        long usuarioId;
         int permisoNuevo;
 
         if (request.getParameter("opcion") != null) {
             String opcion = request.getParameter("opcion");
 
             switch (opcion) {
+                case "todos":
+
+                    break;
                 case "cambiarPermiso":
-                    usuarioNombre = request.getParameter("nombre");
+                    usuarioId = Long.parseLong(request.getParameter("id"));
                     permisoNuevo = Integer.parseInt(request.getParameter("permisoNuevo"));
-                    if (permisoAdmin < permisoNuevo) {
-                        user.setNombre(usuarioNombre);
-                        user.setPermiso(permisoNuevo);
-                        us.setPermiso(user);
-                    }else{
-                        request.setAttribute("mensaje", "Solo el super administrador puede otorgar permisos de administracion");
+                    if (permisoNuevo >= 1 & permisoNuevo <= 3) {
+                        if (permisoNuevo == 1 & request.getSession().getAttribute("permiso").equals("1")) {
+                            request.setAttribute("mensaje", "Solo el super administrador puede otorgar permisos de administracion");
+                        } else {
+                            if (request.getSession().getAttribute("permiso").equals("0")
+                                    || request.getSession().getAttribute("permiso").equals("1")) {
+                                user.setId(usuarioId);
+                                user.setPermiso(permisoNuevo);
+                                us.setPermiso(user);
+                            }
+                        }
+                    } else {
+                        request.setAttribute("mensaje", "Permiso incorrecto");
                     }
-                    
+
                     break;
 
                 case "atras":
-                    paginaSalida = "///////////";
+                    paginaSalida = "navegacion.ftl";
 
                     break;
             }

@@ -30,7 +30,7 @@ public class UsersDAO {
         try {
             JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
 
-            int filas = jtm.update("INSERT INTO USERS (NOMBRE,PASSWORD,CODIGO_ACTIVACION,ACTIVO,FECHA_ACTIVACION,EMAIL,PERMISOS) VALUES(?,?,?,0,?,?,0)",
+            int filas = jtm.update("INSERT INTO USERS (NOMBRE,PASSWORD,CODIGO_ACTIVACION,ACTIVO,FECHA_ACTIVACION,EMAIL,PERMISOS) VALUES(?,?,?,0,?,?,4)",
                     u.getNombre(), u.getPassword(), u.getCodigoActivacion(), u.getFechaActivacion(), u.getEmail());
             if (filas == 0) {
                 u = null;
@@ -104,7 +104,7 @@ public class UsersDAO {
      public void setPermiso(User user) {
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
 
-        jtm.update("UPDATE USERS SET PERMISO = ? WHERE NOMBRE = ?", user.getPermiso(),user.getNombre());
+        jtm.update("UPDATE USERS SET PERMISO = ? WHERE ID = ?", user.getPermiso(),user.getId());
        
     }
 

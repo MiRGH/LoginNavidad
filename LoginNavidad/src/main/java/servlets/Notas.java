@@ -20,7 +20,7 @@ import servicios.NotaServicios;
  *
  * @author Dani
  */
-@WebServlet(name = "Notas", urlPatterns = {"/notas"})
+@WebServlet(name = "Notas", urlPatterns = {"/permiso/notas"})
 public class Notas extends HttpServlet {
 
     /**

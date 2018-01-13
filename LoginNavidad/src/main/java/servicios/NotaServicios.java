@@ -14,7 +14,7 @@ public class NotaServicios {
     public Nota getNotas(Nota notas) {
         NotasDAO dao = new NotasDAO();
 
-        return dao.getNota(notas);  
+        return dao.getNota(notas.getIdAlumno(), notas.getIdAsignatura());  
     }
 
     public Nota addNotas(Nota notas) {

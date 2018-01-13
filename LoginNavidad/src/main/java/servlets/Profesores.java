@@ -31,7 +31,7 @@ import servicios.ProfesoresServicios;
  *
  * @author Carlos
  */
-@WebServlet(name = "Profesores", urlPatterns = {"/profesores"})
+@WebServlet(name = "Profesores", urlPatterns = {"/permiso/profesores"})
 public class Profesores extends HttpServlet {
 
     /**
