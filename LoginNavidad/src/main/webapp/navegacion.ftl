@@ -28,28 +28,34 @@ This is content
 		<#else>
         <div>No hay usuario</div>
 		</#if>
-        <#if Session.permiso!=4>
+        <#if Session.permiso.equals("4")>
         <h3> Permiso de nivel ${Session.permiso}</h3>
-        <#if Session.permiso ==1 || Session.permiso ==0>
+        <#if Session.permiso.equals("1") || Session.permiso.equals("0")>
         <form action="/administracionUsuarios?opcion=todos" name="formulario2" method="POST" >
             <input type="submit" value="Administradores"/>
             </form>
-        <form action="/profesores" name="formulario3" method="POST" >
+        <form action="/profesores" name="formulario2" method="POST" >
             <input type="submit" value="Profesores" />
             </form>
-          <form action="/alumnos" name="formulario4" method="POST" >
+          <form action="/alumnos" name="formulario3" method="POST" >
             <input type="button" value="Alumnos"/>
             </form>
         </#if>
-        <#if Session.permiso ==2>
-        <form action="/profesores" name="formulario3" method="POST" >
-            <input type="submit" value="Profesores" />
-            </form>
+        <#if Session.permiso.equals("2")>
+        <form action="/notas" name="formulario4" method="POST" >
+            <input type="submit" value="notas" />
+        </form>
+        <form action="/tareas" name="formulario5" method="POST" >
+            <input type="submit" value="tareas" />
+        </form>
         </#if>
-        <#if Session.permiso ==3>
-        <form action="/alumnos" name="formulario4" method="POST" >
-            <input type="button" value="Alumnos"/>
-            </form>
+        <#if Session.permiso.equals("3")>
+        <form action="/notas" name="formulario6" method="POST" >
+            <input type="button" value="notas"/>
+        </form>
+        <form action="/tareas" name="formulario7" method="POST" >
+            <input type="submit" value="tareas" />
+        </form>
         </#if>
 		<#else>
         <div>Aun no se le han asignado los permisos</div>

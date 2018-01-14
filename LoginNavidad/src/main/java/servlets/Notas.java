@@ -34,10 +34,10 @@ public class Notas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        AlumnosServicios als = new AlumnosServicios();
+        AsignaturaServicios ass = new AsignaturaServicios();
         if (request.getParameter("opcion") != null) {
             NotaServicios ns = new NotaServicios();
-            AlumnosServicios als = new AlumnosServicios();
-            AsignaturaServicios ass = new AsignaturaServicios();
             Nota n = new Nota();
             String nombreAlumno = request.getParameter("nombreAlumno");
             String idAlumno = request.getParameter("idAlumno");
@@ -65,9 +65,10 @@ public class Notas extends HttpServlet {
             request.setAttribute("idAlumno", idAlumno);
             request.setAttribute("nombreAsignatura", nombreAsignatura);
             request.setAttribute("idAsignatura", idAsignatura);
-            request.setAttribute("alumnos", als.getAllAlumnos());
-            request.setAttribute("asignaturas", ass.getAllAsignaturas());
+
         }
+        request.setAttribute("alumnos", als.getAllAlumnos());
+        request.setAttribute("asignaturas", ass.getAllAsignaturas());
 
         request.getRequestDispatcher("notas.ftl").forward(request, response);
     }

@@ -99,7 +99,7 @@ public class Profesores extends HttpServlet {
             request.setAttribute("alu", alu);//parar darme un alumno concreto 
         }
 
-        request.getRequestDispatcher("alumnos.ftl").forward(request, response);
+        request.getRequestDispatcher("profesores.ftl").forward(request, response);
 
     }
 
