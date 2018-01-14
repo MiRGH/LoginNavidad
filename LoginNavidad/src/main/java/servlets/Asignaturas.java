@@ -39,6 +39,7 @@ public class Asignaturas extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException
     {
+        
         User u = (User) request.getSession().getAttribute("usuario");
         Asignatura a = new Asignatura();
         AsignaturaServicios as = new AsignaturaServicios();

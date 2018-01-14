@@ -34,16 +34,17 @@ public class Notas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        NotaServicios ns = new NotaServicios();
-        AlumnosServicios als = new AlumnosServicios();
-        AsignaturaServicios ass = new AsignaturaServicios();
-        Nota n = new Nota();
-        String nombreAlumno = request.getParameter("nombreAlumno");
-        String idAlumno = request.getParameter("idAlumno");
-        String nombreAsignatura = request.getParameter("nombreAsignatura");
-        String idAsignatura = request.getParameter("idAsignatura");
-        String nota = request.getParameter("nota");
         if (request.getParameter("opcion") != null) {
+            NotaServicios ns = new NotaServicios();
+            AlumnosServicios als = new AlumnosServicios();
+            AsignaturaServicios ass = new AsignaturaServicios();
+            Nota n = new Nota();
+            String nombreAlumno = request.getParameter("nombreAlumno");
+            String idAlumno = request.getParameter("idAlumno");
+            String nombreAsignatura = request.getParameter("nombreAsignatura");
+            String idAsignatura = request.getParameter("idAsignatura");
+            String nota = request.getParameter("nota");
+
             String opcion = request.getParameter("opcion");
 
             switch (opcion) {
@@ -60,13 +61,14 @@ public class Notas extends HttpServlet {
                     ns.addNotas(n);
                     break;
             }
+            request.setAttribute("nombreAlumno", nombreAlumno);
+            request.setAttribute("idAlumno", idAlumno);
+            request.setAttribute("nombreAsignatura", nombreAsignatura);
+            request.setAttribute("idAsignatura", idAsignatura);
+            request.setAttribute("alumnos", als.getAllAlumnos());
+            request.setAttribute("asignaturas", ass.getAllAsignaturas());
         }
-        request.setAttribute("nombreAlumno", nombreAlumno);
-        request.setAttribute("idAlumno", idAlumno);
-        request.setAttribute("nombreAsignatura", nombreAsignatura);
-        request.setAttribute("idAsignatura", idAsignatura);
-        request.setAttribute("alumnos", als.getAllAlumnos());
-        request.setAttribute("asignaturas", ass.getAllAsignaturas());
+
         request.getRequestDispatcher("/////////////////").forward(request, response);
     }
 

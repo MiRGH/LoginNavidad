@@ -45,51 +45,52 @@ public class Profesores extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        User u = (User) request.getSession().getAttribute("usuario");
-
-        AlumnosServicios as = new AlumnosServicios();
-        ProfesoresServicios ps = new ProfesoresServicios();
-        String op = request.getParameter("op");
-        String addTarea = request.getParameter("addTarea");
-        String addNota = request.getParameter("addNota");
-        String nombreTarea = request.getParameter("nombreTarea");
-        String id_asig = request.getParameter("id_asignatura");
-        String id_alumno = request.getParameter("id_alumno");
-        String nota = request.getParameter("nota");
         int dato = 0;
         Alumno alu = null;
+        AlumnosServicios as = new AlumnosServicios();
+        if (request.getParameter("op") != null) {
+            User u = (User) request.getSession().getAttribute("usuario");
 
-        if (op == null) {
-            op = "";
-        }
+            ProfesoresServicios ps = new ProfesoresServicios();
+            String op = request.getParameter("op");
+            String addTarea = request.getParameter("addTarea");
+            String addNota = request.getParameter("addNota");
+            String nombreTarea = request.getParameter("nombreTarea");
+            String id_asig = request.getParameter("id_asignatura");
+            String id_alumno = request.getParameter("id_alumno");
+            String nota = request.getParameter("nota");
 
-        if (op != null) {/*si op existe*/
-            if (u.getPermiso() == 3)/*permiso profe */ {
-                ps.getAllAsigbyProf(u.getId());
+            if (op == null) {
+                op = "";
             }
-            switch (op) {
-                case "VER_ASIG":
-                    try {
-                        ps.getAllAsigbyProf(Long.parseLong(id_asig));
-                        if (addTarea.equals("si")) {
-                            Tarea t = new Tarea();
-                            t.setNombre(nombreTarea);
-                            t.setId_asignatura(Long.parseLong(id_asig));
-                            t.setFecha(LocalDateTime.MIN);
-                            ps.addTarea(t);
+
+            if (op != null) {/*si op existe*/
+                if (u.getPermiso() == 3)/*permiso profe */ {
+                    ps.getAllAsigbyProf(u.getId());
+                }
+                switch (op) {
+                    case "VER_ASIG":
+                        try {
+                            ps.getAllAsigbyProf(Long.parseLong(id_asig));
+                            if (addTarea.equals("si")) {
+                                Tarea t = new Tarea();
+                                t.setNombre(nombreTarea);
+                                t.setId_asignatura(Long.parseLong(id_asig));
+                                t.setFecha(LocalDateTime.MIN);
+                                ps.addTarea(t);
+                            }
+                            if (addNota.equals("si")) {
+                                Nota n = new Nota();
+                                n.setIdAsignatura(Long.parseLong(id_asig));
+                                n.setIdAlumno(Long.parseLong(id_alumno));
+                                n.setNota(Integer.parseInt(nota));
+                                ps.addNota(n);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Error en el formato de fecha");
                         }
-                        if (addNota.equals("si")) {
-                            Nota n = new Nota();
-                            n.setIdAsignatura(Long.parseLong(id_asig));
-                            n.setIdAlumno(Long.parseLong(id_alumno));     
-                            n.setNota(Integer.parseInt(nota));
-                            ps.addNota(n);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Error en el formato de fecha");
-                    }
-                    break;
+                        break;
+                }
             }
         }
         if (dato == 0) {
@@ -98,7 +99,7 @@ public class Profesores extends HttpServlet {
             request.setAttribute("alu", alu);//parar darme un alumno concreto 
         }
 
-        request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
+        request.getRequestDispatcher("alumnos.ftl").forward(request, response);
 
     }
 
