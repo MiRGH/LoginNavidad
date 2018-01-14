@@ -62,11 +62,11 @@ public class Asignaturas extends HttpServlet
            
             default:
               request.setAttribute("asignaturas", as.getAllAsignaturas());
-                request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
+                request.getRequestDispatcher("asignaturas.ftl").forward(request, response);
 
         }
         request.setAttribute("asignaturas", as.getAllAsignaturas());
-        request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
+        request.getRequestDispatcher("asignaturas.ftl").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

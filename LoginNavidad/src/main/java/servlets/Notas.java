@@ -69,7 +69,7 @@ public class Notas extends HttpServlet {
             request.setAttribute("asignaturas", ass.getAllAsignaturas());
         }
 
-        request.getRequestDispatcher("/////////////////").forward(request, response);
+        request.getRequestDispatcher("notas.ftl").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
