@@ -25,7 +25,6 @@ public class Tarea {
     public void setId_asignatura(long id_asignatura) {
         this.id_asignatura = id_asignatura;
     }
-    
 
     public String getNombre() {
         return nombre;
@@ -43,7 +42,6 @@ public class Tarea {
         this.id = id;
     }
 
-    
     public LocalDateTime getFecha() {
         return fecha;
     }
@@ -51,6 +49,4 @@ public class Tarea {
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
-
-  
 }

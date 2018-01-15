@@ -139,6 +139,26 @@ public class ProfesoresDAO {
         return a;
     }
 
+    public List<Tarea> verTareas(int id_alumno, int id_asignatura) {
+        List<Tarea> lista = null;
+
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Tarea>> h = new BeanListHandler<>(Tarea.class);
+            lista = qr.query(con,
+                    "SELECT t.id, t.nombre ,t.id_asignatura, t.fecha, "
+                            + "at.id_tarea, at.completado, at.id_alumno from TAREAS t"
+                            + " join ALU_TAREA at on t.id = at.id_tarea "
+                            + "where at.id_alumno = ? and t.id_asignatura = ? LIMIT 10 OFFSET ?", h, id_alumno, id_asignatura);
+        } catch (Exception e) {
+            Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
+
     public Nota addNota(Nota a) {
         Connection con = null;
         try {
@@ -156,6 +176,25 @@ public class ProfesoresDAO {
             DBConnection.getInstance().cerrarConexion(con);
         }
         return a;
+    }
+    public List<Nota> verNotas(int id_alumno, int id_asignatura) {
+        List<Nota> lista = null;
+
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Nota>> h = new BeanListHandler<>(Nota.class);
+            lista = qr.query(con,
+                    "SELECT n.nota, n.id_alumno, n.id_asignatura, "
+                            + "a.id, a.nombre, a.id_tarea from NOTAS n"
+                            + " join ALUMNOS a on n.id_alumno = a.id "
+                            + "where a.id = ? and as.id = ? LIMIT 10 OFFSET ?", h, id_alumno, id_asignatura);
+        } catch (Exception e) {
+            Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
     }
 
 }
