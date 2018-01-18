@@ -19,6 +19,10 @@ This is content
     <body>
          <#if Session.usuarioNombre??>
         <h1>Bienvenido ${Session.usuarioNombre}</h1>
+        <form action="users?opcion=modificar" name="formulario8" method="POST" >
+            <input type="text" id="pass" name="password" size="12" />
+            <input type="submit" value="cambiar contraseña" />
+        </form>
          <#if Session.mensaje??> 
         <h3> ${Session.mensaje}</h3>
         </#if>

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import modelos.User;
 import servicios.UserServicios;
 
-
 /**
  *
  * @author Dani
@@ -36,7 +35,7 @@ public class Users extends HttpServlet {
 
         UserServicios us = new UserServicios();
         User user = new User();
-        String paginaSalida="login.ftl";
+        String paginaSalida = "login.ftl";
         String usuarioNombre;
         String usuarioPass;
 
@@ -92,10 +91,10 @@ public class Users extends HttpServlet {
 
                     switch (loguear) {
                         case 0:
-                            int permiso= us.getPermiso(user);
+                            int permiso = us.getPermiso(user);
                             request.getSession().setAttribute("usuarioNombre", usuarioNombre);
                             request.getSession().setAttribute("permiso", permiso);
-                            paginaSalida="navegacion.ftl";
+                            paginaSalida = "navegacion.ftl";
                             break;
                         case 1:
                             request.setAttribute("mensaje", "Nombre o contraseña incorrectos, intentelo de nuevo");
@@ -103,6 +102,23 @@ public class Users extends HttpServlet {
                     }
 
                     break;
+
+                case "recuperar":
+                    if(request.getParameter("password")!=null){
+                    usuarioNombre = request.getParameter("nombre");
+                    String nuevaPass=request.getParameter("password");
+                    user.setNombre(usuarioNombre);
+                    user.setPassword(nuevaPass);
+                    us.cambiarPass(user);
+                    }
+                    break;
+
+                case "modificar":
+                    usuarioNombre =(String) request.getSession().getAttribute("usuarioNombre");
+                    user.setNombre(usuarioNombre);
+                    us.recuperarPass(user);
+                    break;
+
                 case "unLogin":
                     request.getSession().invalidate();
                     break;

@@ -14,22 +14,27 @@ This is content
         <title>${title}</title>
         <meta charset="${charset}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <script>
-            function boton(num) {
-                var opcion = null;
-                switch (num) {
-                    case 1:
-                        opcion = "users?opcion=login";
-                        document.forms.formulario1.action = opcion;
-                        document.forms.formulario1.submit();
-                        break;
-                    case 2:
-                        opcion = "users?opcion=registrar";
-                        document.forms.formulario2.action = opcion;
-                        document.forms.formulario2.submit();
-                        break;
-            }
-        </script>
+        <script>
+          function boton(num) {
+              var opcion = null;
+              switch (num) {
+                  case 1:
+                      opcion = "users?opcion=login";
+                      document.forms.formulario1.action = opcion;
+                      document.forms.formulario1.submit();
+                      break;
+                  case 2:
+                      opcion = "users?opcion=registrar";
+                      document.forms.formulario2.action = opcion;
+                      document.forms.formulario2.submit();
+                      break;
+                  case 3:
+                      opcion = "users?opcion=recuperar";
+                      document.forms.formulario3.action = opcion;
+                      document.forms.formulario3.submit();
+                      break;
+          }
+            </script>
         </head>
     <body>
          <#if Session.mensaje??> 
@@ -40,14 +45,18 @@ This is content
             <input type="text" id="nombre1" name="nombre" size="12" />
             <input type="text" id="pass1" name="password" size="12"/>
             <input type="button" value="Logearse" onclick="boton(1);"/>
-        </form>
+            </form>
         <form action="/login" name="formulario2" method="POST" >
             <input type="text" id="nombre2" name="nombre" size="12" />
             <input type="text" id="pass2" name="password" size="12"/>
             <input type="text" id="email" name="email" size="12" />
             <input type="button" value="Registrarse" onclick="boton(2);"/>
-        </form>
+            </form>
+        <form action="/login" name="formulario3" method="POST" >
+            <input type="text" id="nombre3" name="nombre" size="12" />
+            <input type="button" value="Recuperar Contraseña" onclick="boton(3);"/>
+            </form>
 
-		
- </body>
+
+        </body>
     </html>

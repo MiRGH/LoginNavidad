@@ -42,6 +42,17 @@ public class UsersDAO {
         return u;
     }
 
+    public void cambiarPass(User u) {
+        try {
+            JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+
+            jtm.update("UPDATE USERS SET PASSWORD = ? WHERE NOMBRE = ?",
+                    u.getPassword(), u.getNombre());
+        } catch (Exception ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public boolean comprobarNombres(String nombre) {
         boolean existe = false;
         try {
@@ -67,6 +78,15 @@ public class UsersDAO {
         }
 
         return valido;
+    }
+
+    public String recuperarPass(User user) {
+
+        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+
+        String pass = (String) jtm.queryForObject("SELECT PASSWORD FROM USERS WHERE NOMBRE = ?", String.class, user.getNombre());
+
+        return pass;
     }
 
     public User getUserCodigoActivacion(String codigoActivacion) {
@@ -100,12 +120,12 @@ public class UsersDAO {
 
         return permiso;
     }
-    
-     public void setPermiso(User user) {
+
+    public void setPermiso(User user) {
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
 
-        jtm.update("UPDATE USERS SET PERMISO = ? WHERE ID = ?", user.getPermiso(),user.getId());
-       
+        jtm.update("UPDATE USERS SET PERMISO = ? WHERE ID = ?", user.getPermiso(), user.getId());
+
     }
 
     public User getUserNombre(String nombre) {

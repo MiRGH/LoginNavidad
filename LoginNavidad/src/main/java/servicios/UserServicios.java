@@ -36,12 +36,12 @@ public class UserServicios {
     }
 
     public int registrar(User user) {
+        UsersDAO dao = new UsersDAO();
         boolean cogido = comprobarNombres(user.getNombre());
-
         int registro = 0;
         if (!cogido) {
             try {
-                UsersDAO dao = new UsersDAO();
+              
 
                 user.setPassword(PasswordHash.getInstance().createHash(user.getPassword()));
                 user.setCodigoActivacion(Utils.randomAlphaNumeric(Configuration.getInstance().getLongitudCodigo()));
@@ -58,6 +58,33 @@ public class UserServicios {
             }
         }
         return registro;
+    }
+
+    public void recuperarPass(User user) {
+        UsersDAO dao = new UsersDAO();
+
+        String passwordBD = dao.recuperarPass(user);
+        byte[] password = passwordBD.getBytes();
+        String pass = "";
+        try {
+            pass = PasswordHash.getInstance().descifra(password);
+        } catch (Exception ex) {
+            Logger.getLogger(UserServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MailServicios mail = new MailServicios();
+        mail.mandarMail(user.getEmail(), "Su contraseña es: " + pass, "Recuperar contraseña");
+    }
+    
+    public void cambiarPass(User user){
+         UsersDAO dao = new UsersDAO();
+          try {
+                user.setPassword(PasswordHash.getInstance().createHash(user.getPassword()));
+               
+                dao.cambiarPass(user);
+                
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+                Logger.getLogger(UserServicios.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
     public int activar(String codigo) {
