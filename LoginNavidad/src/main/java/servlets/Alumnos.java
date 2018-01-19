@@ -74,7 +74,7 @@ public class Alumnos extends HttpServlet {
             request.setAttribute("alu", alu);//parar darme un alumno concreto 
         }
 
-        request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
+        request.getRequestDispatcher("alumnos.ftl").forward(request, response);
 
     }
 
